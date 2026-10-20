@@ -135,6 +135,14 @@ class SteveXAgent {
   }
 
   /** Whether the bot is connected and spawned. */
+  startBrain(opts = {}, bus = null) {
+    if (this.brainLoop) return
+    const { Brain } = require('./brain')
+    const llmCfg = this.config?.llm || {}
+    this.brainLoop = new Brain(this, llmCfg, bus || { emit: () => {} }, opts)
+    this.brainLoop.start()
+  }
+
   isOnline() {
     return this.bot && this.connected
   }

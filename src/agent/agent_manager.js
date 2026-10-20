@@ -40,6 +40,7 @@ class AgentManager {
 
     const agent = new SteveXAgent(cfg, name, this.sharedCommands)
     agent.start()
+    if (cfg?.brain?.enabled) agent.startBrain(cfg.brain, this.eventBus)
     this.agents.set(name, agent)
 
     this.eventBus.emit('agent:connect', { name })
